@@ -1,4 +1,4 @@
-package com.marugy.app.Member.Dto.response;
+package com.marugy.app.domain.Member.Dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

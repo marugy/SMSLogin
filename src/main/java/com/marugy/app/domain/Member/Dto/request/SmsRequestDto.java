@@ -1,6 +1,6 @@
-package com.marugy.app.Member.Dto.request;
+package com.marugy.app.domain.Member.Dto.request;
 
-import com.marugy.app.Member.Dto.MessageDto;
+import com.marugy.app.domain.Member.Dto.MessageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

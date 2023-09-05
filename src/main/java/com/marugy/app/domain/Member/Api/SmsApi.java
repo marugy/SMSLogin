@@ -1,11 +1,12 @@
-package com.marugy.app.Member.Api;
+package com.marugy.app.domain.Member.Api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.marugy.app.Member.Dto.MessageDto;
-import com.marugy.app.Member.Dto.response.SmsResponseDto;
-import com.marugy.app.Member.Service.SmsService;
+import com.marugy.app.domain.Member.Dto.MessageDto;
+import com.marugy.app.domain.Member.Dto.response.SmsResponseDto;
+import com.marugy.app.domain.Member.Service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,11 +22,18 @@ import java.security.NoSuchAlgorithmException;
 public class SmsApi {
     private final SmsService smsService;
 
+    //인증번호 발송
     @PostMapping("/sms/send")
     public SmsResponseDto sendSms(@RequestBody MessageDto messageDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         log.info(messageDto.getTo());
         System.out.print(messageDto.getTo());
         SmsResponseDto responseDto = smsService.sendSms(messageDto);
         return responseDto;
+    }
+
+
+    @PostMapping("/sms/verify")
+    public ResponseEntity<Void> verifyCode(){
+        return null;
     }
 }

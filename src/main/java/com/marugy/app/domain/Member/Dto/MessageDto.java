@@ -1,4 +1,4 @@
-package com.marugy.app.Member.Dto;
+package com.marugy.app.domain.Member.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

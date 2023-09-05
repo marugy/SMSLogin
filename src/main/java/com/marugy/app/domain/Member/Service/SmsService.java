@@ -1,15 +1,17 @@
-package com.marugy.app.Member.Service;
+package com.marugy.app.domain.Member.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marugy.app.Member.Dto.MessageDto;
-import com.marugy.app.Member.Dto.request.SmsRequestDto;
-import com.marugy.app.Member.Dto.response.SmsResponseDto;
+import com.marugy.app.domain.Member.Dto.MessageDto;
+import com.marugy.app.domain.Member.Dto.request.SmsRequestDto;
+import com.marugy.app.domain.Member.Dto.response.SmsResponseDto;
+import com.marugy.app.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -36,7 +38,7 @@ public class SmsService {
 
     //휴대폰 인증 번호
     private final String smsConfirmNum = createSmsKey();
-//    private final RedisUtill redisUtil;
+    private final RedisUtil redisUtil;
 
     @Value("${naver-cloud-sms.accessKey}")
     private String accessKey;
@@ -102,15 +104,17 @@ public class SmsService {
         //쌓은 바디를 json형태로 반환
         ObjectMapper objectMapper = new ObjectMapper();
         String body = objectMapper.writeValueAsString(request);
+
         // jsonBody와 헤더 조립
         HttpEntity<String> httpBody = new HttpEntity<>(body, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+
         //restTemplate로 post 요청 보내고 오류가 없으면 202코드 반환
         SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDto.class);
         SmsResponseDto responseDto = new SmsResponseDto(smsConfirmNum);
-        // redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
+        redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
         return smsResponseDto;
     }
 
@@ -126,5 +130,15 @@ public class SmsService {
         }
         return key.toString();
     }
+
+    public String verifyEmail(String key) throws ChangeSetPersister.NotFoundException {
+        String memberPhone = redisUtil.getData(key); //key값은 인증번호, value는 전화번호
+        if (memberPhone == null) {
+            throw new ChangeSetPersister.NotFoundException();
+        }
+        redisUtil.deleteData(key);
+        return memberPhone;
+    }
+
 
 }
