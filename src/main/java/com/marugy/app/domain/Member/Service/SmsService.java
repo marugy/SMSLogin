@@ -2,7 +2,7 @@ package com.marugy.app.domain.Member.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marugy.app.domain.Member.Dto.MessageDto;
+import com.marugy.app.domain.Member.Dto.request.MessageRequestDto;
 import com.marugy.app.domain.Member.Dto.request.SmsRequestDto;
 import com.marugy.app.domain.Member.Dto.response.SmsResponseDto;
 import com.marugy.app.global.util.RedisUtil;
@@ -80,7 +80,7 @@ public class SmsService {
         return encodeBase64String;
     }
 
-    public SmsResponseDto sendSms(MessageDto messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+    public SmsResponseDto sendSms(MessageRequestDto messageRequestDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         String time = Long.toString(System.currentTimeMillis());
 
         HttpHeaders headers = new HttpHeaders();
@@ -89,8 +89,8 @@ public class SmsService {
         headers.set("x-ncp-iam-access-key", accessKey);
         headers.set("x-ncp-apigw-signature-v2", getSignature(time)); // signature 서명
 
-        List<MessageDto> messages = new ArrayList<>();
-        messages.add(messageDto);
+        List<MessageRequestDto> messages = new ArrayList<>();
+        messages.add(messageRequestDto);
 
         SmsRequestDto request = SmsRequestDto.builder()
                 .type("SMS")
@@ -114,7 +114,7 @@ public class SmsService {
         //restTemplate로 post 요청 보내고 오류가 없으면 202코드 반환
         SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDto.class);
         SmsResponseDto responseDto = new SmsResponseDto(smsConfirmNum);
-        redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
+        redisUtil.setDataExpire(smsConfirmNum, messageRequestDto.getTo(), 60 * 3L); // 유효시간 3분
         return smsResponseDto;
     }
 

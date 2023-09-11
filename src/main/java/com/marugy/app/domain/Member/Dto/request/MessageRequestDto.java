@@ -1,4 +1,4 @@
-package com.marugy.app.domain.Member.Dto;
+package com.marugy.app.domain.Member.Dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class MessageDto {
+public class MessageRequestDto {
     private String to;
 //    String content; //메시지를 담아서 전송한다면 content 사용
 }

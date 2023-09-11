@@ -1,6 +1,5 @@
 package com.marugy.app.domain.Member.Dto.request;
 
-import com.marugy.app.domain.Member.Dto.MessageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,5 +17,5 @@ public class SmsRequestDto {
     private String countryCode;
     private String from;
     private String content;
-    private List<MessageDto> messages;
+    private List<MessageRequestDto> messages;
 }
