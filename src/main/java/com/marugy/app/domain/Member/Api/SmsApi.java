@@ -26,14 +26,15 @@ public class SmsApi {
     @PostMapping("/sms/send")
     public SmsResponseDto sendSms(@RequestBody MessageDto messageDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         log.info(messageDto.getTo());
-        System.out.print(messageDto.getTo());
-        SmsResponseDto responseDto = smsService.sendSms(messageDto);
-        return responseDto;
+        SmsResponseDto SmsResponseDto = smsService.sendSms(messageDto);
+        return SmsResponseDto;
     }
 
-
-    @PostMapping("/sms/verify")
+    //인증 번호 검증
+    @PostMapping("/sms/check")
     public ResponseEntity<Void> verifyCode(){
         return null;
     }
+
+
 }
