@@ -2,11 +2,10 @@ package com.marugy.app.domain.Member.Api;
 
 import static com.marugy.app.global.api.ApiResponse.OK;
 
-import com.marugy.app.domain.Member.Dto.request.JoinRequestDto;
-import com.marugy.app.domain.Member.Dto.request.LoginRequestDto;
-import com.marugy.app.domain.Member.Dto.request.SimpleLoginRequestDto;
+import com.marugy.app.domain.Member.Dto.request.JoinRequest;
+import com.marugy.app.domain.Member.Dto.request.LoginRequest;
+import com.marugy.app.domain.Member.Dto.request.SimpleLoginRequest;
 import com.marugy.app.global.api.ApiResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +17,16 @@ import org.springframework.web.bind.annotation.*;
 public class MemberApi {
 
     @PostMapping("/join")
-    public ApiResponse<?> join(@RequestBody JoinRequestDto joinRequestDto){
+    public ApiResponse<?> join(@RequestBody JoinRequest joinRequest){
         return OK(null);
     }
 
     @PostMapping("/login")
-    public ApiResponse<?> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ApiResponse<?> login(@RequestBody LoginRequest loginRequest){
         return OK(null);
     }
     @PostMapping("/simple-login")
-    public ApiResponse<?> simpleLogin(@RequestBody SimpleLoginRequestDto simpleLoginRequestDto){
+    public ApiResponse<?> simpleLogin(@RequestBody SimpleLoginRequest simpleLoginRequest){
         return OK(null);
     }
     @GetMapping("/info")

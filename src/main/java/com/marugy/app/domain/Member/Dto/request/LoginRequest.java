@@ -1,4 +1,4 @@
 package com.marugy.app.domain.Member.Dto.request;
 
-public class VerifyPasswordRequestDto {
+public class LoginRequest {
 }

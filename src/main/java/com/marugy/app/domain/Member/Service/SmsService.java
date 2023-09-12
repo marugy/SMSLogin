@@ -2,9 +2,9 @@ package com.marugy.app.domain.Member.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marugy.app.domain.Member.Dto.request.MessageRequestDto;
-import com.marugy.app.domain.Member.Dto.request.SmsRequestDto;
-import com.marugy.app.domain.Member.Dto.response.SmsResponseDto;
+import com.marugy.app.domain.Member.Dto.request.MessageRequest;
+import com.marugy.app.domain.Member.Dto.request.SmsRequest;
+import com.marugy.app.domain.Member.Dto.response.SmsResponse;
 import com.marugy.app.global.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +80,7 @@ public class SmsService {
         return encodeBase64String;
     }
 
-    public SmsResponseDto sendSms(MessageRequestDto messageRequestDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+    public SmsResponse sendSms(MessageRequest messageRequest) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         String time = Long.toString(System.currentTimeMillis());
 
         HttpHeaders headers = new HttpHeaders();
@@ -89,10 +89,10 @@ public class SmsService {
         headers.set("x-ncp-iam-access-key", accessKey);
         headers.set("x-ncp-apigw-signature-v2", getSignature(time)); // signature 서명
 
-        List<MessageRequestDto> messages = new ArrayList<>();
-        messages.add(messageRequestDto);
+        List<MessageRequest> messages = new ArrayList<>();
+        messages.add(messageRequest);
 
-        SmsRequestDto request = SmsRequestDto.builder()
+        SmsRequest request = SmsRequest.builder()
                 .type("SMS")
                 .contentType("COMM")
                 .countryCode("82")
@@ -112,10 +112,10 @@ public class SmsService {
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
         //restTemplate로 post 요청 보내고 오류가 없으면 202코드 반환
-        SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDto.class);
-        SmsResponseDto responseDto = new SmsResponseDto(smsConfirmNum);
-        redisUtil.setDataExpire(smsConfirmNum, messageRequestDto.getTo(), 60 * 3L); // 유효시간 3분
-        return smsResponseDto;
+        SmsResponse smsResponse = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponse.class);
+        SmsResponse responseDto = new SmsResponse(smsConfirmNum);
+        redisUtil.setDataExpire(smsConfirmNum, messageRequest.getTo(), 60 * 3L); // 유효시간 3분
+        return smsResponse;
     }
 
 

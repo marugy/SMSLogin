@@ -1,5 +1,5 @@
 package com.marugy.app.domain.Member.Dto.request;
 
-public class VerifySmsRequestDto {
+public class VerifySmsRequest {
 
 }

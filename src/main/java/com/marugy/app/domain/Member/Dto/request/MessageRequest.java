@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class MessageRequestDto {
+public class MessageRequest {
     private String to;
 //    String content; //메시지를 담아서 전송한다면 content 사용
 }

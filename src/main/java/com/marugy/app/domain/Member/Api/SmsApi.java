@@ -2,7 +2,7 @@ package com.marugy.app.domain.Member.Api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.marugy.app.domain.Member.Dto.request.*;
-import com.marugy.app.domain.Member.Dto.response.SmsResponseDto;
+import com.marugy.app.domain.Member.Dto.response.SmsResponse;
 import com.marugy.app.domain.Member.Service.SmsService;
 import com.marugy.app.global.api.ApiResponse;
 import static com.marugy.app.global.api.ApiResponse.OK;
@@ -27,33 +27,33 @@ public class SmsApi {
 
     //인증번호 발송
     @PostMapping("/sms/send")
-    public ApiResponse<SmsResponseDto> sendSms(@RequestBody MessageRequestDto messageRequestDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
-        log.info(messageRequestDto.getTo());
-        SmsResponseDto SmsResponseDto = smsService.sendSms(messageRequestDto);
-        return OK(SmsResponseDto);
+    public ApiResponse<SmsResponse> sendSms(@RequestBody MessageRequest messageRequest) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        log.info(messageRequest.getTo());
+        SmsResponse SmsResponse = smsService.sendSms(messageRequest);
+        return OK(SmsResponse);
     }
 
     //인증 번호 검증
     @PostMapping("/sms/check")
-    public ApiResponse<?> verifySMS(@RequestBody VerifySmsRequestDto verifySmsRequestDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+    public ApiResponse<?> verifySMS(@RequestBody VerifySmsRequest verifySmsRequest) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         return OK(null);
     }
 
     //아이디 중복 검사
     @PostMapping("/id/check")
-    public ApiResponse<?> verifyId(@RequestBody VerifyIdRequestDto verifyIdRequestDto){
+    public ApiResponse<?> verifyId(@RequestBody VerifyIdRequest verifyIdRequest){
         return OK(null);
     }
 
     //간편 비밀번호 검사
     @PostMapping("/simple-password/check")
-    public ApiResponse<?> verifySimplePassword(@RequestBody VerifySimplePasswordRequestDto verifySimplePasswordRequestDto){
+    public ApiResponse<?> verifySimplePassword(@RequestBody VerifySimplePasswordRequest verifySimplePasswordRequest){
         return OK(null);
     }
 
     // 비밀번호 검사
     @PostMapping("/password/check")
-    public ApiResponse<?> verifyPassword(@RequestBody VerifyPasswordRequestDto verifyPasswordRequestDto){
+    public ApiResponse<?> verifyPassword(@RequestBody VerifyPasswordRequest verifyPasswordRequest){
         return OK(null);
     }
 

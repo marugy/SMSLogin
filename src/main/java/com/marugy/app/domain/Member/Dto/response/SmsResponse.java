@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Builder
-public class SmsResponseDto {
+public class SmsResponse {
     private String requestId;
     private LocalDateTime requestTime;
     private String statusCode;
     private String statusName;
     private String smsConfirmNum;
 
-    public SmsResponseDto(String smsConfirmNum){
+    public SmsResponse(String smsConfirmNum){
         this.smsConfirmNum = smsConfirmNum;
     }
 

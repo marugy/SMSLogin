@@ -1,5 +1,5 @@
 package com.marugy.app.domain.Member.Dto.request;
 
-public class SmsCertificationRequestDto {
+public class SmsCertificationRequest {
     private String phone;
 }
