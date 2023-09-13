@@ -5,10 +5,15 @@ import static com.marugy.app.global.api.ApiResponse.OK;
 import com.marugy.app.domain.Member.Dto.request.JoinRequest;
 import com.marugy.app.domain.Member.Dto.request.LoginRequest;
 import com.marugy.app.domain.Member.Dto.request.SimpleLoginRequest;
+import com.marugy.app.domain.Member.Dto.response.LoginResponse;
+import com.marugy.app.domain.Member.Dto.response.MemberInfoResponse;
+import com.marugy.app.domain.Member.Dto.response.ResultResponse;
 import com.marugy.app.global.api.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.transform.Result;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,40 +22,47 @@ import org.springframework.web.bind.annotation.*;
 public class MemberApi {
 
     @PostMapping("/join")
-    public ApiResponse<?> join(@RequestBody JoinRequest joinRequest){
-        return OK(null);
+    public ApiResponse<ResultResponse> join(@RequestBody JoinRequest joinRequest) {
+        return OK(new ResultResponse());
     }
 
     @PostMapping("/login")
-    public ApiResponse<?> login(@RequestBody LoginRequest loginRequest){
-        return OK(null);
+    public ApiResponse<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        return OK(new LoginResponse());
     }
+
     @PostMapping("/simple-login")
-    public ApiResponse<?> simpleLogin(@RequestBody SimpleLoginRequest simpleLoginRequest){
-        return OK(null);
+    public ApiResponse<LoginResponse> simpleLogin(@RequestBody SimpleLoginRequest simpleLoginRequest) {
+        return OK(new LoginResponse());
     }
+
     @GetMapping("/info")
-    public ApiResponse<?> getMemberInfoById(){
-        return OK(null);
+    public ApiResponse<MemberInfoResponse> getMemberInfoById() {
+        return OK(new MemberInfoResponse());
     }
+
     @PostMapping("/info")
-    public ApiResponse<?> modifyMemberInfoById(){
-        return OK(null);
+    public ApiResponse<ResultResponse> modifyMemberInfoById() {
+        return OK(new ResultResponse());
     }
+
     @PutMapping("/password")
-    public ApiResponse<?> modifyPasswordById(){
-        return OK(null);
+    public ApiResponse<ResultResponse> modifyPasswordById() {
+        return OK(new ResultResponse());
     }
+
     @PutMapping("/simple-password")
-    public ApiResponse<?> modifySimplePasswordById(){
-        return OK(null);
+    public ApiResponse<ResultResponse> modifySimplePasswordById() {
+        return OK(new ResultResponse());
     }
+
     @GetMapping("/saving")
-    public ApiResponse<?> getSavingInfo(){
-        return OK(null);
+    public ApiResponse<Integer> getSavingInfo() {
+        return OK(30000);
     }
+
     @DeleteMapping()
-    public ApiResponse<?> deleteMemberById(){
-        return OK(null);
+    public ApiResponse<ResultResponse> deleteMemberById() {
+        return OK(new ResultResponse());
     }
 }

@@ -2,10 +2,13 @@ package com.marugy.app.domain.Member.Api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.marugy.app.domain.Member.Dto.request.*;
+import com.marugy.app.domain.Member.Dto.response.ResultResponse;
 import com.marugy.app.domain.Member.Dto.response.SmsResponse;
 import com.marugy.app.domain.Member.Service.SmsService;
 import com.marugy.app.global.api.ApiResponse;
+
 import static com.marugy.app.global.api.ApiResponse.OK;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,26 +38,26 @@ public class SmsApi {
 
     //인증 번호 검증
     @PostMapping("/sms/check")
-    public ApiResponse<?> verifySMS(@RequestBody VerifySmsRequest verifySmsRequest) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
-        return OK(null);
+    public ApiResponse<ResultResponse> verifySMS(@RequestBody VerifySmsRequest verifySmsRequest) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+        return OK(new ResultResponse());
     }
 
     //아이디 중복 검사
     @PostMapping("/id/check")
-    public ApiResponse<?> verifyId(@RequestBody VerifyIdRequest verifyIdRequest){
-        return OK(null);
+    public ApiResponse<ResultResponse> verifyId(@RequestBody VerifyIdRequest verifyIdRequest) {
+        return OK(new ResultResponse());
     }
 
     //간편 비밀번호 검사
     @PostMapping("/simple-password/check")
-    public ApiResponse<?> verifySimplePassword(@RequestBody VerifySimplePasswordRequest verifySimplePasswordRequest){
-        return OK(null);
+    public ApiResponse<ResultResponse> verifySimplePassword(@RequestBody VerifySimplePasswordRequest verifySimplePasswordRequest) {
+        return OK(new ResultResponse());
     }
 
     // 비밀번호 검사
     @PostMapping("/password/check")
-    public ApiResponse<?> verifyPassword(@RequestBody VerifyPasswordRequest verifyPasswordRequest){
-        return OK(null);
+    public ApiResponse<ResultResponse> verifyPassword(@RequestBody VerifyPasswordRequest verifyPasswordRequest) {
+        return OK(new ResultResponse());
     }
 
 }
